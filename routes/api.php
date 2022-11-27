@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AutenticacionController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +19,17 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/', function (){
+    return response()->json('Welcome to laravel API');
+});
+
+Route::group(
+    ['prefix' => 'auth'],
+    function(){
+        Route::post('login', [AutenticacionController::class, 'login']);
+        Route::post('registrar', [AutenticacionController::class, 'registrar']);
+    }
+);
+
+Route::get('obtener', [AutenticacionController::class, 'obtener']);
