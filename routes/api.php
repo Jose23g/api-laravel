@@ -20,13 +20,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/', function (){
+Route::get('/', function () {
     return response()->json('Welcome to laravel API');
 });
 
 Route::group(
     ['prefix' => 'auth'],
-    function(){
+    function () {
         Route::post('login', [AutenticacionController::class, 'login']);
         Route::post('registrar', [AutenticacionController::class, 'registrar']);
     }
