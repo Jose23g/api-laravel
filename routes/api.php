@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AutenticacionController;
-
+use App\Http\Controllers\IngresarJosue;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +34,8 @@ Route::group(
 
 Route::get('obtener', [AutenticacionController::class, 'obtener']);
 Route::post('nuevoproveedor', [AutenticacionController::class, 'ingresar']);
+Route::get('obtener', [AutenticacionController::class, 'obtener']); 
+
+Route::get('listarp', [IngresarJosue::class, 'listar']);
+
+Route::post('ingresarp', [IngresarJosue::class, 'ingresarp']);
