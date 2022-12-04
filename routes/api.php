@@ -33,3 +33,4 @@ Route::group(
 );
 
 Route::get('obtener', [AutenticacionController::class, 'obtener']);
+Route::post('nuevoproveedor', [AutenticacionController::class, 'ingresar']);
