@@ -13,5 +13,6 @@ class Unidad_Medida extends Model
 
     protected $fillable = [
         'Nombre',
-    ];
+    ]; 
+    public $timestamps = false;
 }

@@ -15,5 +15,7 @@ class Pedido extends Model
         'id_usuario',
         'fecha',
         'total'
-    ];
+    ]; 
+
+    public $timestamps = false;
 }
