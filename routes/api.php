@@ -34,7 +34,7 @@ Route::group(
 
 Route::get('obtener', [AutenticacionController::class, 'obtener']);
 Route::post('nuevoproveedor', [AutenticacionController::class, 'ingresar']);
-Route::get('obtener', [AutenticacionController::class, 'obtener']); 
+Route::get('obtener', [AutenticacionController::class, 'obtener']);
 
 Route::get('listarp', [IngresarJosue::class, 'listar']);
 

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Presentacion;
 use Validator;
 use Illuminate\Http\Request;
@@ -22,20 +23,20 @@ class IngresarJosue extends Controller
         if ($validator->fails()) {
 
             return response()->json($validator->errors());
-        } 
+        }
 
-        if(!Presentacion::Where('Nombre', '=', $request-> Nombre)->first()){
-            
+        if (!Presentacion::Where('Nombre', '=', $request->Nombre)->first()) {
+
             Presentacion::create([
                 'Nombre' => $request->Nombre
-            ]); 
+            ]);
 
-            return response()->json(['mensage' => 'se ingreso corretamente', 
-            'Unidad'=> $request->Nombre]);
+            return response()->json([
+                'mensage' => 'se ingreso corretamente',
+                'Unidad' => $request->Nombre
+            ]);
         }
-        
+
         return response()->json(['mensage' => 'fallo la unidad ya se encuentra']);
-    } 
-
-
     }
+}
