@@ -11,6 +11,7 @@ class Presentacion extends Model
     protected $table = 'Presentacion';
     
     protected $fillable = [
+        
         'Nombre',
     ]; 
 

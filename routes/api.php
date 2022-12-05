@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AutenticacionController;
 use App\Http\Controllers\IngresarJosue;
+use App\Http\Controllers\ProductoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,3 +40,4 @@ Route::get('obtener', [AutenticacionController::class, 'obtener']);
 Route::get('listarp', [IngresarJosue::class, 'listar']);
 
 Route::post('ingresarp', [IngresarJosue::class, 'ingresarp']);
+Route::post('nuevopro', [ProductoController::class,'nuevoproducto']);
