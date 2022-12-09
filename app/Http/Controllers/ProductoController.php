@@ -16,10 +16,11 @@ class ProductoController extends Controller
         if (!Presentacion::where('Nombre', '=', $nombre)->first()) {
             $nuevoP = Presentacion::create([
                 'Nombre' => $nombre
-            ]);
+            ])->get();
             return $nuevoP[0]->id_presentacion;
         }
         $nuevoP = Presentacion::where('Nombre', '=', $nombre)->get();
+        //echo $nuevoP;
         return $nuevoP[0]->id_presentacion;
     }
 
@@ -28,12 +29,12 @@ class ProductoController extends Controller
         if (!Unidad_Medida::where('Nombre', '=', $unidad)->first()) {
             $nuevaU = Unidad_Medida::create([
                 'Nombre' => $unidad
-            ]);
-            
+            ])->get();
+
             return $nuevaU[0]->id_unidad;
         }
 
-        $laUnidad = Unidad_Medida::where('Nombre','=', $unidad)->get();
+        $laUnidad = Unidad_Medida::where('Nombre', '=', $unidad)->get();
         //echo $laUnidad[0]->id_unidad;
         return $laUnidad[0]->id_unidad;
     }
@@ -55,16 +56,17 @@ class ProductoController extends Controller
             return response()->json(['mensage', $validar->erros()]);
         }
 
-        //$idpresentacion = self::presentacion($request->presentacion);
-        //$idunidad = self::unidad($request->unidad);
-
-        Producto::create([
-            'Codigo_producto' => $request->codigoproducto,
-            'Nombre' => $request->nombre,
-            'id_presentacion' => self::getIdPresentacion($request->presentacion),
-            'id_unidad' => self::getIdunidad($request->unidad),
-            'Precio_venta' =>$request->precioventa,
-        ]);
+        try {
+            $NuevoProducto = Producto::create([
+                'Codigo_producto' => $request->codigoproducto,
+                'Nombre' => $request->nombre,
+                'id_presentacion' => self::getIdPresentacion($request->presentacion),
+                'id_unidad' => self::getIdunidad($request->unidad),
+                'Precio_venta' => $request->precioventa,
+            ]);
+            return response()->json(['message' => 'Nuevo producto registrado', 'status' => 200, 'Producto' => $NuevoProducto]);
+        } catch (Exception $e) {
+            return response()->json(['message' => 'Error', 'status' => 500, $e]);
+        }
     }
-
 }
