@@ -64,7 +64,11 @@ class ProductoController extends Controller
                 'id_unidad' => self::getIdunidad($request->unidad),
                 'Precio_venta' => $request->precioventa,
             ]);
-            return response()->json(['message' => 'Nuevo producto registrado', 'status' => 200, 'Producto' => $NuevoProducto]);
+            return response()->json([
+                'message' => 'Nuevo producto registrado',
+                'status' => 200,
+                'Producto' => $NuevoProducto
+            ]);
         } catch (Exception $e) {
             return response()->json(['message' => 'Error', 'status' => 500, $e]);
         }

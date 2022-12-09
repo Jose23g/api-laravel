@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AutenticacionController;
 use App\Http\Controllers\IngresarJosue;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ProveedoresController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,19 +26,27 @@ Route::get('/', function () {
     return response()->json('Welcome to laravel API');
 });
 
-Route::group(
-    ['prefix' => 'auth'],
+Route::prefix('prefix')->group(
     function () {
         Route::post('login', [AutenticacionController::class, 'login']);
         Route::post('registrar', [AutenticacionController::class, 'registrar']);
     }
 );
 
-Route::get('obtener', [AutenticacionController::class, 'obtener']);
-Route::post('nuevoproveedor', [AutenticacionController::class, 'ingresar']);
-Route::get('obtener', [AutenticacionController::class, 'obtener']);
+Route::prefix('ingresar')->group(
+    function () {
+        Route::post('producto', [ProductoController::class, 'nuevoproducto']);
+        Route::post('ingresarp', [IngresarJosue::class, 'ingresarp']);
+        Route::post('proveedor', [ProveedoresController::class, 'nuevoProveedor']);
+        Route::post('proveedor-producto', [ProveedoresController::class, 'proveedorProducto']);
+    }
+);
 
-Route::get('listarp', [IngresarJosue::class, 'listar']);
-
-Route::post('ingresarp', [IngresarJosue::class, 'ingresarp']);
-Route::post('nuevopro', [ProductoController::class,'nuevoproducto']);
+Route::prefix('obtener')->group(
+    function () {
+        Route::get('obtener', [AutenticacionController::class, 'obtener']);
+        Route::get('obtener', [AutenticacionController::class, 'obtener']);
+        Route::get('listarp', [IngresarJosue::class, 'listar']);
+        Route::get('proveedor', [ProveedoresController::class, 'obtenerProveedor']);
+    }
+);
