@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Producto_Proveedores;
 use App\Models\Proveedores;
+use Exception;
 use Validator;
 use Illuminate\Http\Request;
 
@@ -45,24 +46,34 @@ class ProveedoresController extends Controller
 
     public function proveedorProducto(Request $request)
     {
-        $validar = Validator::make(
-            $request->all(),
-            [
-                'id_producto' => 'required|unique:Producto_proveedores',
-                'id_proveedor' => 'required|unique:Producto_Proveedores'
+        try {
 
-            ]
-        );
+            $validar = Validator::make(
+                $request->all(),
+                [
+                    'id_producto' => 'required|unique:Producto_Proveedores',
+                    'id_proveedor' => 'required|unique:Producto_Proveedores'
 
-        if ($validar->fails()) {
-            return response()->json(['message' => $validar->errors()]);
+                ]
+            );
+
+            if ($validar->fails()) {
+                return response()->json(['message' => $validar->errors()]);
+            }
+
+            $resultado = Producto_Proveedores::create([
+                'id_producto' => $request->id_producto,
+                'id_proveedor' => $request->id_proveedor
+            ]);
+
+            return response()->json([
+                'message' =>'success',
+                'resultado' => $resultado
+            ]);
+
+        } catch (Exception $e) {
+            return response()->json(['Error' => $e->getMessage()]);
         }
 
-        $resultado = Producto_Proveedores::create([
-            'id_producto' =>$request->id_producto,
-            'id_proveedor' =>$request->id_proveedor
-        ]);
-
-        return response()->json(['resultado' => $resultado]);
     }
 }

@@ -10,8 +10,9 @@ class Producto_Proveedores extends Model
     use HasFactory;
     protected $table = 'Producto_Proveedores';
 
-    protected $fillable=[
+    protected $fillable = [
         'id_producto',
         'id_proveedor',
     ];
+    public $timestamps = false;
 }
