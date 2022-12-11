@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Presentacion;
 use App\Models\Producto;
 use App\Models\Unidad_Medida;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
@@ -74,6 +75,7 @@ class ProductoController extends Controller
             return response()->json(['message' => 'Error', 'status' => 500, $e]);
         }
     }
+<<<<<<< HEAD
 
     public function todoProducto()
     {
@@ -101,3 +103,6 @@ class ProductoController extends Controller
         }
     }
 }
+=======
+}
+>>>>>>> 2bffd3d (Correccion)
