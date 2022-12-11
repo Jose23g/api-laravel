@@ -44,9 +44,10 @@ Route::prefix('ingresar')->group(
 
 Route::prefix('obtener')->group(
     function () {
-        Route::get('obtener', [AutenticacionController::class, 'obtener']);
-        Route::get('obtener', [AutenticacionController::class, 'obtener']);
+        Route::get('informacion', [AutenticacionController::class, 'obtener']);
         Route::get('listarp', [IngresarJosue::class, 'listar']);
-        Route::get('proveedor', [ProveedoresController::class, 'obtenerProveedor']);
+        Route::get('proveedor', [ProveedoresController::class, 'obtenerProveedores']);
+        Route::get('detalleProduct', [ProductoController::class, 'detalleProduct']);
+        Route::get('productos', [ProductoController::class, 'todoProducto']);
     }
 );

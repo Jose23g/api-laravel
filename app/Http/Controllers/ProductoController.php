@@ -6,6 +6,7 @@ use App\Models\Presentacion;
 use App\Models\Producto;
 use App\Models\Unidad_Medida;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Validator;
 
 class ProductoController extends Controller
@@ -71,6 +72,28 @@ class ProductoController extends Controller
             ]);
         } catch (Exception $e) {
             return response()->json(['message' => 'Error', 'status' => 500, $e]);
+        }
+    }
+
+    public function todoProducto()
+    {
+        return response()->json(['producto' => Producto::get()]);
+    }
+    
+    public function detalleProduct()
+    {
+        try {
+            $resultado = DB::table('Producto_Proveedores')
+
+                ->join('Producto', 'Producto.id_producto', '=', 'Producto_Proveedores.id_producto')
+                ->join('Proveedores', 'Proveedores.id_proveedor', '=', 'Producto_Proveedores.id_proveedor')
+                ->select('Producto.Nombre as Producto', 'Producto.Precio_venta', 'Proveedores.Nombre as Proveedor', 'Proveedores.Cedula_juridica')
+                ->get();
+
+            return response()->json(['Resultado' => $resultado]);
+        } catch (Exception $e) {
+
+            return response()->json(['Error' => $e->getMessage()]);
         }
     }
 }

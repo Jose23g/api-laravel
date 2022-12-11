@@ -39,7 +39,7 @@ class ProveedoresController extends Controller
         }
     }
 
-    public function obtenerProveedor()
+    public function obtenerProveedores()
     {
         return response()->json(Proveedores::get());
     }
@@ -51,8 +51,8 @@ class ProveedoresController extends Controller
             $validar = Validator::make(
                 $request->all(),
                 [
-                    'id_producto' => 'required|unique:Producto_Proveedores',
-                    'id_proveedor' => 'required|unique:Producto_Proveedores'
+                    'id_producto' => 'required',
+                    'id_proveedor' => 'required'
 
                 ]
             );
@@ -63,17 +63,16 @@ class ProveedoresController extends Controller
 
             $resultado = Producto_Proveedores::create([
                 'id_producto' => $request->id_producto,
-                'id_proveedor' => $request->id_proveedor
+                'id_proveedor' => $request->id_proveedor,
+                'Precio' => $request->precio
             ]);
 
             return response()->json([
-                'message' =>'success',
+                'message' => 'success',
                 'resultado' => $resultado
             ]);
-
         } catch (Exception $e) {
             return response()->json(['Error' => $e->getMessage()]);
         }
-
     }
 }

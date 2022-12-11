@@ -41,28 +41,31 @@ class AutenticacionController extends Controller
 
     public function login(Request $request)
     {
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'email' => 'required|email',
-                'password' => 'required',
-            ]
-        );
-
-        if ($validator->fails()) {
-            return response()->json(['message' => $validator->errors()]);
-        }
-
-        if ($user = User::where('email', '=', $request->email)->first()) {
-
-            if (!Hash::check($request->password, $user->password)) {
-                return response()->json(['message' => 'Password no existe']);
+        try {
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'email' => 'required|email',
+                    'password' => 'required',
+                ]
+            );
+            if ($validator->fails()) {
+                return response()->json(['message' => $validator->errors()]);
             }
 
-            return response()->json(['Message' => 'Bienvenido al sistema', 'usuario' => $user]);
-        }
+            if ($user = User::where('email', '=', $request->email)->first()) {
 
-        return response()->json(['message' => 'Email o contraseña incorrecta']);
+               if (!Hash::check($request->password, $user->password)) {
+                    return response()->json(['message' => 'Password no existe']);
+                }
+
+                return response()->json(['Message' => 'Bienvenido al sistema', 'usuario' => $user]);
+            }
+
+            return response()->json(['message' => 'Email o contraseña incorrecta']);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->get_browser_error()]);
+        }
     }
 
     public function obtener()
