@@ -79,7 +79,7 @@ class ProductoController extends Controller
     {
         return response()->json(['producto' => Producto::get()]);
     }
-    
+
     public function detalleProduct()
     {
         try {
@@ -87,8 +87,12 @@ class ProductoController extends Controller
 
                 ->join('Producto', 'Producto.id_producto', '=', 'Producto_Proveedores.id_producto')
                 ->join('Proveedores', 'Proveedores.id_proveedor', '=', 'Producto_Proveedores.id_proveedor')
-                ->select('Producto.Nombre as Producto', 'Producto.Precio_venta', 'Proveedores.Nombre as Proveedor', 'Proveedores.Cedula_juridica')
-                ->get();
+                ->select(
+                    'Producto.Nombre as Producto',
+                    'Producto.Precio_venta',
+                    'Proveedores.Nombre as Proveedor',
+                    'Proveedores.Cedula_juridica'
+                )->get();
 
             return response()->json(['Resultado' => $resultado]);
         } catch (Exception $e) {

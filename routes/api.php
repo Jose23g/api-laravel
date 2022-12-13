@@ -39,6 +39,8 @@ Route::prefix('ingresar')->group(
         Route::post('ingresarp', [IngresarJosue::class, 'ingresarp']);
         Route::post('proveedor', [ProveedoresController::class, 'nuevoProveedor']);
         Route::post('proveedor-producto', [ProveedoresController::class, 'proveedorProducto']);
+
+        Route::post('DetalleProveedor', [ProveedoresController::class,'consultaProveedor']);
     }
 );
 
