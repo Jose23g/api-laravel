@@ -94,20 +94,22 @@ class ProveedoresController extends Controller
         }
 
         try {
-            /*$productos = Producto::join(
-                'Producto_Proveedores',
-                'Producto.id_producto',
-                'Producto_Proveedores.id_producto'
+            /*  $productos = Producto::join(
+            'Producto_Proveedores',
+            'Producto.id_producto',
+            'Producto_Proveedores.id_producto'
             )->select('Producto.Nombre as Producto')
-                ->where('Producto_Proveedores.id_proveedor', $request->id_proveedor)->get();*/
+            ->where('Producto_Proveedores.id_proveedor', $request->id_proveedor)->get(); */
 
-          /*  $productos = DB::table('Producto_Proveedores')
+            $provedor = Proveedores::find(1)->first();
+
+            $productos = DB::table('Producto_Proveedores')
                 ->join('Producto', 'Producto.id_producto', 'Producto_Proveedores.id_producto')
                 ->join('Proveedores', 'Proveedores.id_proveedor', 'Producto_Proveedores.id_proveedor')
                 ->where('Producto_Proveedores.id_proveedor', '=', $request->id_proveedor)
-                ->select('Producto.Nombre as Producto', 'Proveedores.Nombre as Proveedores')->get();*/
+                ->select('Producto.Nombre as Producto', 'Proveedores.Nombre as Proveedores')->get();
 
-            return response()->json(['Resultado' => $productos]);
+            return response()->json([$provedor->Nombre => $productos]);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()]);
         }

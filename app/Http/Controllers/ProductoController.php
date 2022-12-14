@@ -75,34 +75,4 @@ class ProductoController extends Controller
             return response()->json(['message' => 'Error', 'status' => 500, $e]);
         }
     }
-<<<<<<< HEAD
-
-    public function todoProducto()
-    {
-        return response()->json(['producto' => Producto::get()]);
-    }
-
-    public function detalleProduct()
-    {
-        try {
-            $resultado = DB::table('Producto_Proveedores')
-
-                ->join('Producto', 'Producto.id_producto', '=', 'Producto_Proveedores.id_producto')
-                ->join('Proveedores', 'Proveedores.id_proveedor', '=', 'Producto_Proveedores.id_proveedor')
-                ->select(
-                    'Producto.Nombre as Producto',
-                    'Producto.Precio_venta',
-                    'Proveedores.Nombre as Proveedor',
-                    'Proveedores.Cedula_juridica'
-                )->get();
-
-            return response()->json(['Resultado' => $resultado]);
-        } catch (Exception $e) {
-
-            return response()->json(['Error' => $e->getMessage()]);
-        }
-    }
 }
-=======
-}
->>>>>>> 2bffd3d (Correccion)
