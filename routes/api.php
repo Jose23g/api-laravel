@@ -48,8 +48,11 @@ Route::prefix('obtener')->group(
     function () {
         Route::get('informacion', [AutenticacionController::class, 'obtener']);
         Route::get('listarp', [IngresarJosue::class, 'listar']);
-        Route::get('proveedor', [ProveedoresController::class, 'obtenerProveedores']);
+        Route::get('proveedor', [ProveedoresController::class, 'obtenerProveedoresSolo']);
         Route::get('detalleProduct', [ProductoController::class, 'detalleProduct']);
         Route::get('productos', [ProductoController::class, 'todoProducto']);
+        Route::get('proveedores', [ProveedoresController::class, 'obtenerProveedoresProductos']);
+        Route::get('listaproducto', [ProductoController::class, 'listaProductosConProveedor']);
+
     }
 );

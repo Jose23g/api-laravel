@@ -43,7 +43,7 @@ class ProveedoresController extends Controller
         }
     }
 
-    public function obtenerProveedores()
+    public function obtenerProveedoresSolo()
     {
         return response()->json(Proveedores::get());
     }
@@ -56,7 +56,8 @@ class ProveedoresController extends Controller
                 $request->all(),
                 [
                     'id_producto' => 'required',
-                    'id_proveedor' => 'required'
+                    'id_proveedor' => 'required',
+                    'precio' => 'required'
 
                 ]
             );
@@ -94,24 +95,50 @@ class ProveedoresController extends Controller
         }
 
         try {
-            /*  $productos = Producto::join(
-            'Producto_Proveedores',
-            'Producto.id_producto',
-            'Producto_Proveedores.id_producto'
+            /* $productos = DB::table('Producto_Proveedores')
+            ->join('Producto', 'Producto.id_producto', 'Producto_Proveedores.id_producto')
+            ->join('Proveedores', 'Proveedores.id_proveedor', 'Producto_Proveedores.id_proveedor')
+            ->where('Producto_Proveedores.id_proveedor', '=', $request->id_proveedor)
+            ->select('Producto.Nombre as Producto', 'Proveedores.Nombre as Proveedores')->get(); */
+
+            $provedor = Proveedores::find($request->id_proveedor);
+
+            $productos = Producto::join(
+                'Producto_Proveedores',
+                'Producto.id_producto',
+                'Producto_Proveedores.id_producto'
             )->select('Producto.Nombre as Producto')
-            ->where('Producto_Proveedores.id_proveedor', $request->id_proveedor)->get(); */
+                ->where('Producto_Proveedores.id_proveedor', $request->id_proveedor)->get();
 
-            $provedor = Proveedores::find(1)->first();
 
-            $productos = DB::table('Producto_Proveedores')
-                ->join('Producto', 'Producto.id_producto', 'Producto_Proveedores.id_producto')
-                ->join('Proveedores', 'Proveedores.id_proveedor', 'Producto_Proveedores.id_proveedor')
-                ->where('Producto_Proveedores.id_proveedor', '=', $request->id_proveedor)
-                ->select('Producto.Nombre as Producto', 'Proveedores.Nombre as Proveedores')->get();
-
+            if ($productos->isEmpty()) {
+                return response()->json([$provedor->Nombre => 'Este proveedor no tiene productos registrados']);
+            }
             return response()->json([$provedor->Nombre => $productos]);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()]);
         }
+    }
+
+    public function obtenerProveedoresProductos()
+    {
+        $consultaProveedor = DB::table('Proveedores')
+            ->leftJoin(
+                'Producto_Proveedores',
+                'Producto_Proveedores.id_proveedor',
+                'Proveedores.id_proveedor'
+            )
+            ->leftJoin(
+                'Producto',
+                'Producto.id_producto',
+                'Producto_Proveedores.id_producto'
+            )
+            ->select(
+                'Proveedores.Nombre as proveedor',
+                'Producto.Nombre as producto',
+                'Producto_Proveedores.Precio as precio',
+            )->get();
+
+        return response()->json(['Proveedores' => $consultaProveedor]);
     }
 }
