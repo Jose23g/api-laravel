@@ -107,7 +107,7 @@ class ProveedoresController extends Controller
                 'Producto_Proveedores',
                 'Producto.id_producto',
                 'Producto_Proveedores.id_producto'
-            )->select('Producto.Nombre as Producto')
+            )->select('Producto.Nombre as Producto', 'Producto_Proveedores.precio as precio')
                 ->where('Producto_Proveedores.id_proveedor', $request->id_proveedor)->get();
 
 
