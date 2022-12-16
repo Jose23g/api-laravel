@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Presentacion;
 use App\Models\Producto;
+use App\Models\Proveedores;
 use App\Models\Unidad_Medida;
 use Exception;
 use Illuminate\Http\Request;
@@ -79,22 +80,8 @@ class ProductoController extends Controller
     public function listaProductosConProveedor()
     {
         try {
-            $consultaProducto = DB::table('Producto')
-                ->leftJoin(
-                    'Producto_Proveedores',
-                    'Producto_Proveedores.id_producto',
-                    'Producto.id_producto'
-                )
-                ->leftJoin(
-                    'Proveedores',
-                    'Proveedores.id_proveedor',
-                    'Producto_Proveedores.id_proveedor'
-                )
-                ->select(
-                    'Producto.Nombre as producto',
-                    'Producto_Proveedores.Precio as precio',
-                    'Proveedores.Nombre as proveedor',
-                )->get();
+
+            $consultaProducto = Producto::with('Proveedores')->get();
 
             return response()->json(['Producto' => $consultaProducto]);
 

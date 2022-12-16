@@ -122,23 +122,16 @@ class ProveedoresController extends Controller
 
     public function obtenerProveedoresProductos()
     {
-        $consultaProveedor = DB::table('Proveedores')
-            ->leftJoin(
-                'Producto_Proveedores',
-                'Producto_Proveedores.id_proveedor',
-                'Proveedores.id_proveedor'
-            )
-            ->leftJoin(
-                'Producto',
-                'Producto.id_producto',
-                'Producto_Proveedores.id_producto'
-            )
-            ->select(
-                'Proveedores.Nombre as proveedor',
-                'Producto.Nombre as producto',
-                'Producto_Proveedores.Precio as precio',
-            )->get();
+        try {
+           
+            $consultaProveedor = Proveedores::with('Producto')->get();
 
-        return response()->json(['Proveedores' => $consultaProveedor]);
+            return response()->json([$consultaProveedor]);
+
+
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()]);
+        }
+
     }
 }

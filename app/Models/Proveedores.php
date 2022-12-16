@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Proveedores extends Model
 {
@@ -17,4 +18,9 @@ class Proveedores extends Model
     ];
 
     public $timestamps = false;
+   
+    public function producto(): BelongsToMany
+    {
+        return $this->belongsToMany(Producto::class, 'Producto_Proveedores', 'id_proveedor', 'id_producto');
+    }
 }
