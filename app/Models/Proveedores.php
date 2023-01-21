@@ -18,9 +18,14 @@ class Proveedores extends Model
     ];
 
     public $timestamps = false;
-   
+
     public function producto(): BelongsToMany
     {
-        return $this->belongsToMany(Producto::class, 'Producto_Proveedores', 'id_proveedor', 'id_producto');
+        return $this->belongsToMany(
+            Producto::class,
+            'Producto_Proveedores',
+            'id_proveedor',
+            'id_producto'
+        )->withPivot('price');
     }
 }

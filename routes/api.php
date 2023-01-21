@@ -47,9 +47,9 @@ Route::prefix('ingresar')->group(
 Route::prefix('obtener')->group(
     function () {
         Route::get('informacion', [AutenticacionController::class, 'obtener']);
-        Route::get('listarp', [IngresarJosue::class, 'listar']);
+        Route::get('listarp', [IngresarJosue::class, 'listar']);//Lista Presentaciones
         Route::get('proveedor', [ProveedoresController::class, 'obtenerProveedoresSolo']);
-        Route::get('detalleProduct', [ProductoController::class, 'detalleProduct']);
+        Route::get('detalleProduct', [ProductoController::class, 'detalleProduct']);//Detalle de un producto especific (falta realizar)
         Route::get('productos', [ProductoController::class, 'todoProducto']);
         Route::get('proveedores', [ProveedoresController::class, 'obtenerProveedoresProductos']);
         Route::get('listaproducto', [ProductoController::class, 'listaProductosConProveedor']);

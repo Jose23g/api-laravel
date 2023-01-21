@@ -123,10 +123,11 @@ class ProveedoresController extends Controller
     public function obtenerProveedoresProductos()
     {
         try {
-           
-            $consultaProveedor = Proveedores::with('Producto')->get();
 
-            return response()->json([$consultaProveedor]);
+            $consultaProveedor = Proveedores::with(['Producto:Nombre'])
+                ->get();
+
+            return response()->json(['data' => $consultaProveedor]);
 
 
         } catch (Exception $e) {

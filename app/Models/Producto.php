@@ -26,6 +26,11 @@ class Producto extends Model
 
   public function proveedores(): BelongsToMany
   {
-    return $this->belongsToMany(Proveedores::class, 'Producto_Proveedores', 'id_producto', 'id_proveedor');
+    return $this->belongsToMany(
+      Proveedores::class,
+      'Producto_Proveedores',
+      'id_producto',
+      'id_proveedor'
+    )->withPivot('price');
   }
 }

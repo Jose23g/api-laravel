@@ -42,6 +42,11 @@ class ProductoController extends Controller
         return $laUnidad[0]->id_unidad;
     }
 
+    public function todoproducto()
+    {
+        return Producto::all();
+    }
+
     public function nuevoproducto(Request $request)
     {
         $validar = Validator::make(
@@ -81,7 +86,9 @@ class ProductoController extends Controller
     {
         try {
 
-            $consultaProducto = Producto::with('Proveedores')->get();
+            $consultaProducto = Producto::with('Proveedores:Nombre,Cedula_juridica')
+         /*    ->select('Proveedoree') */
+            ->get();
 
             return response()->json(['Producto' => $consultaProducto]);
 
