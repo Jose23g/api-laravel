@@ -15,7 +15,7 @@ class Detalle_pedido extends Model
         'id_pedido',
         'id_proveedor',
         'cantidad',
-        'precio',
+        'total_linea',
     ];
 
     public $timestamps = false;
