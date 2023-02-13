@@ -10,7 +10,6 @@ class IngresarJosue extends Controller
 {
     public function listar()
     {
-
         return Presentacion::all();
     }
 

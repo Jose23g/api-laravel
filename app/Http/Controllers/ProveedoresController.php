@@ -135,4 +135,8 @@ class ProveedoresController extends Controller
         }
 
     }
+
+    public function consular(Request $request){
+        return Proveedores::where('Nombre', $request->nombre)->first();
+    }
 }

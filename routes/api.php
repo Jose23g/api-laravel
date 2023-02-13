@@ -53,6 +53,7 @@ Route::prefix('obtener')->group(
         Route::get('productos', [ProductoController::class, 'todoProducto']);
         Route::get('proveedores', [ProveedoresController::class, 'obtenerProveedoresProductos']);
         Route::get('listaproducto', [ProductoController::class, 'listaProductosConProveedor']);
+        Route::post('consultar', [ProveedoresController::class, 'consular']);
 
     }
 );
