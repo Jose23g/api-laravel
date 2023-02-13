@@ -13,8 +13,7 @@ class Pedido extends Model
 
     protected $fillable = [
         'id_usuario',
-        'fecha',
-        'total'
+        'fecha'
     ]; 
 
     public $timestamps = false;

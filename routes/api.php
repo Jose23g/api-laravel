@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AutenticacionController;
 use App\Http\Controllers\IngresarJosue;
+use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProveedoresController;
 
@@ -17,6 +18,7 @@ use App\Http\Controllers\ProveedoresController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -39,7 +41,8 @@ Route::prefix('ingresar')->group(
         Route::post('ingresarp', [IngresarJosue::class, 'ingresarp']);
         Route::post('proveedor', [ProveedoresController::class, 'nuevoProveedor']);
         Route::post('proveedor-producto', [ProveedoresController::class, 'proveedorProducto']);
-
+        Route::post('pedido', [PedidoController::class, 'Pedir']);
+        Route::get('cuenta', [PedidoController::class, 'contar']);
         Route::post('DetalleProveedor', [ProveedoresController::class, 'consultaProveedor']);
     }
 );
@@ -53,6 +56,15 @@ Route::prefix('obtener')->group(
         Route::get('productos', [ProductoController::class, 'todoProducto']);
         Route::get('proveedores', [ProveedoresController::class, 'obtenerProveedoresProductos']);
         Route::get('listaproducto', [ProductoController::class, 'listaProductosConProveedor']);
-
+        Route::post('buscador', [PedidoController::class, 'BuscadorNombre']);
+        Route::get('fecha', [PedidoController::class, 'FechaNow']);
+        Route::post('codigo', [PedidoController::class, 'buscarporcodigo']);
+        Route::post('consultar', [PedidoController::class, 'consular']);
+        
     }
-);
+); 
+ 
+Route::post('PrecioProveedor', [PedidoController::class, 'PrecioProveedor']);
+
+
+
