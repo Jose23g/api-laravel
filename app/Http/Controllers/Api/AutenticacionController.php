@@ -19,9 +19,13 @@ class AutenticacionController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'name' => 'required|string',
+                'nombre1' => 'required',
+                'nombre2' => 'required',
+                'apellido1' => 'required',
+                'cedula' => 'required',
+                'usuario' => 'required|unique:users',
                 'email' => 'required|email|unique:users',
-                'password' => 'required',
+                'contraseña' => 'required'
             ]
         );
         if ($validator->fails()) {
@@ -29,14 +33,17 @@ class AutenticacionController extends Controller
         }
 
         $usuario = new User([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
-
+                'nombre1' => $request->nombre1,
+                'nombre2' => $request->nombre2,
+                'apellido1' => $request->apellido1,
+                'apellido2' => $request->apellido2,
+                'cedula' => $request->cedula,
+                'usuario' => $request->usuario,
+                'email'  => $request->email,
+                'contraseña'=> Hash::make($request->contraseña)
         ]);
 
-        $usuario->save();
-        return response()->json(['message' => 'Usuario creado', 200]);
+        return response()->json(['message' => 'Usuario creado', 200, 'usuario' => $usuario]);
     }
 
     public function login(Request $request)
@@ -45,21 +52,21 @@ class AutenticacionController extends Controller
             $validator = Validator::make(
                 $request->all(),
                 [
-                    'email' => 'required|email',
-                    'password' => 'required',
+                    'usuario' => 'required',
+                    'contraseña' => 'required',
                 ]
             );
             if ($validator->fails()) {
                 return response()->json(['message' => $validator->errors()]);
             }
 
-            if ($user = User::where('email', '=', $request->email)->first()) {
+            if ($user = User::where('usuario', '=', $request->usuario)->first()) {
 
-               if (!Hash::check($request->password, $user->password)) {
+               if (!Hash::check($request->contraseña, $user->contraseña)) {
                     return response()->json(['message' => 'Password no existe']);
                 }
-
-                return response()->json(['Message' => 'Bienvenido al sistema', 'usuario' => $user]);
+                $token = $user->createToken('auth_token')->plainTextToken;
+                return response()->json(['Message' => 'Bienvenido al sistema', 'user' => $user,'token' =>  $token]);
             }
 
             return response()->json(['message' => 'Email o contraseña incorrecta']);

@@ -12,7 +12,6 @@ class Inventario extends Model
 
     protected $fillable = [
         'id_producto',
-        'id_entrada',
         'total'
     ];
     public $timestamps = false;

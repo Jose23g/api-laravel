@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AutenticacionController;
 use App\Http\Controllers\IngresarJosue;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\EntradasController;
 use App\Http\Controllers\ProveedoresController;
 
 /*
@@ -22,13 +23,18 @@ use App\Http\Controllers\ProveedoresController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+}); 
+
+Route::group(['prefix' => 'Prueba', 'middleware' => ['auth:sanctum']], function(){
+    Route::get('all','Controller@post');
+    Route::get('user','Controller@post');
 });
 
 Route::get('/', function () {
     return response()->json('Welcome to laravel API');
 });
 
-Route::prefix('prefix')->group(
+Route::prefix('auntenticacion')->group(
     function () {
         Route::post('login', [AutenticacionController::class, 'login']);
         Route::post('registrar', [AutenticacionController::class, 'registrar']);
@@ -42,8 +48,12 @@ Route::prefix('ingresar')->group(
         Route::post('proveedor', [ProveedoresController::class, 'nuevoProveedor']);
         Route::post('proveedor-producto', [ProveedoresController::class, 'proveedorProducto']);
         Route::post('pedido', [PedidoController::class, 'Pedir']);
+        Route::post('verpedido', [PedidoController::class, 'verpedidoporid']);
         Route::get('cuenta', [PedidoController::class, 'contar']);
+        Route::get('todospedidos', [PedidoController::class, 'todospedidos']);
+        Route::get('todasentradas', [PedidoController::class, 'todosentradas']);
         Route::post('DetalleProveedor', [ProveedoresController::class, 'consultaProveedor']);
+        Route::post('IngresarEntrada', [PedidoController::class, 'IngresarEntrada']);
     }
 );
 

@@ -13,7 +13,7 @@ class Producto_Proveedores extends Model
     protected $fillable = [
         'id_producto',
         'id_proveedor',
-        'Precio'
+        'price'
     ];
     public $timestamps = false;
 }
