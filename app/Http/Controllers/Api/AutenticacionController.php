@@ -32,7 +32,7 @@ class AutenticacionController extends Controller
             return response()->json(['message' => $validator->errors()]);
         }
 
-        $usuario = new User([
+        $usuario = User::create([
                 'nombre1' => $request->nombre1,
                 'nombre2' => $request->nombre2,
                 'apellido1' => $request->apellido1,
