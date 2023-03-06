@@ -20,7 +20,7 @@ class PedidoController extends Controller
       if(!$tamaño==0){
         
         $pedido = Pedido::create([
-         'id_usuario' => 3,
+         'id_usuario' => self::ObtenerUsuario(),
          'id_estado' => 1,
          'fecha' => $this->FechaNow()
         ]);   
@@ -42,7 +42,7 @@ class PedidoController extends Controller
                 'total_linea'=>$totallinea 
             ]);      
       }
-      return Response()->json(['Message' => ' Se ha registrado correctamente el pedido ']);
+      return Response()->json(['Message' => ' Se ha registrado correctamente el pedido ', 'Pedido' => $pedido]);
     }
     return Response()->json(['Error' => ' Ingresa al menos 1 producto ']);
    }   
@@ -63,7 +63,9 @@ class PedidoController extends Controller
           'id_pedido'=> $request->id_pedido,
           'Cantidad'=> $detalle['cantidad']  
       ]); 
-
+       
+          self::Verificarentrada($detalle['id_producto'],$detalle['cantidad']);
+        
      } 
 
      return Response()->json(['Message' =>'Se han registrado la entradas al inventario']);
@@ -154,15 +156,15 @@ class PedidoController extends Controller
     public function Verificarentrada(String $id_producto , int $cantidadentrada){
       
       $consulta = Inventario::where('id_producto',$id_producto)->first();
-      
-      if($consulta==0){
+     
+      if(!$consulta = Inventario::where('id_producto',$id_producto)->first()){
         
         $nuevoinventario = Inventario::create(['id_producto' =>$id_producto, 
          'cantidad' =>$cantidadentrada]);  
-
+       
          return $nuevoinventario;
       }
-
+      
       $cantidadnueva = ($consulta->cantidad + $cantidadentrada);
       Inventario::where('id_producto','=', $id_producto)->update(['cantidad' => $cantidadnueva]); 
        return Inventario::where('id_producto', '=', $id_producto)->first();

@@ -79,5 +79,11 @@ class AutenticacionController extends Controller
     {
         $usuario = User::all();
         return response()->json($usuario);
+    } 
+
+    public function loggout(){
+        auth()->user()->tokens()->delete(); 
+
+        return Response()->json(['Message' => 'Sesion cerrada con exito']);
     }
 }
