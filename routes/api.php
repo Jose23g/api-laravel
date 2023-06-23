@@ -33,10 +33,10 @@ Route::group(['prefix' => 'sesion', 'middleware' => ['auth:sanctum']], function(
     Route::post('loggout', [AutenticacionController::class, 'loggout']);
     Route::post('getusu', [PedidoController::class, 'ObtenerUsuario']);
 });
-
+Route::post('producto', [ProductoController::class, 'nuevoproducto']);
 /** Rutas de ingreso de datos o metodos Post*/
 Route::group(['prefix' => 'ingresar', 'middleware' => ['auth:sanctum']], function(){
-    Route::post('producto', [ProductoController::class, 'nuevoproducto']);
+    
     Route::post('ingresarp', [IngresarJosue::class, 'ingresarp']);
     Route::post('proveedor', [ProveedoresController::class, 'nuevoProveedor']);
     Route::post('proveedor-producto', [ProveedoresController::class, 'proveedorProducto']);
@@ -50,7 +50,7 @@ Route::group(['prefix' => 'ingresar', 'middleware' => ['auth:sanctum']], functio
     Route::post('buscador', [PedidoController::class, 'BuscadorNombre']);
     Route::post('buscarinventario', [InventarioController ::class, 'buscarporoid']);
 });
-
+Route::get('productos', [ProductoController::class, 'todoProducto']);
 /** Rutas obtener  datos o metodos Get */
 Route::group(['prefix' => 'obtener', 'middleware' => ['auth:sanctum']], function(){
     Route::get('todospedidos', [PedidoController::class, 'todospedidos']);
@@ -58,7 +58,7 @@ Route::group(['prefix' => 'obtener', 'middleware' => ['auth:sanctum']], function
     Route::get('listarp', [IngresarJosue::class, 'listar']);//Lista Presentaciones
     Route::get('proveedor', [ProveedoresController::class, 'obtenerProveedoresSolo']);
     Route::get('detalleProduct', [ProductoController::class, 'detalleProduct']);//Detalle de un producto especific (falta realizar)
-    Route::get('productos', [ProductoController::class, 'todoProducto']);
+    
     Route::get('proveedores', [ProveedoresController::class, 'obtenerProveedoresProductos']);
     Route::get('listaproducto', [ProductoController::class, 'listaProductosConProveedor']);
     Route::get('todasentradas', [PedidoController::class, 'todosentradas']);

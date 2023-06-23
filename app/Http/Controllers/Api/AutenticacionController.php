@@ -22,6 +22,7 @@ class AutenticacionController extends Controller
                 'nombre1' => 'required',
                 'nombre2' => 'required',
                 'apellido1' => 'required',
+                'apellido2' => 'required',
                 'cedula' => 'required',
                 'usuario' => 'required|unique:users',
                 'email' => 'required|email|unique:users',
@@ -43,7 +44,7 @@ class AutenticacionController extends Controller
                 'contraseña'=> Hash::make($request->contraseña)
         ]);
 
-        return response()->json(['message' => 'Usuario creado', 200, 'usuario' => $usuario]);
+        return response()->json(['message' => 'Usuario creado', 200, 'usuario' => $usuario],200);
     }
 
     public function login(Request $request)
@@ -57,21 +58,21 @@ class AutenticacionController extends Controller
                 ]
             );
             if ($validator->fails()) {
-                return response()->json(['message' => $validator->errors()]);
+                return response()->json(['message' => $validator->errors()],401);
             }
 
             if ($user = User::where('usuario', '=', $request->usuario)->first()) {
 
                if (!Hash::check($request->contraseña, $user->contraseña)) {
-                    return response()->json(['message' => 'Password no existe']);
+                    return response()->json(['message' => 'Password no existe'],401);
                 }
                 $token = $user->createToken('auth_token')->plainTextToken;
-                return response()->json(['Message' => 'Bienvenido al sistema', 'user' => $user,'token' =>  $token]);
+                return response()->json(['Message' => 'Bienvenido al sistema', 'user' => $user,'token' =>  $token],200);
             }
 
             return response()->json(['message' => 'Email o contraseña incorrecta']);
         } catch (Exception $e) {
-            return response()->json(['message' => $e->get_browser_error()]);
+            return response()->json(['message' => $e->get_browser_error()],500);
         }
     }
 

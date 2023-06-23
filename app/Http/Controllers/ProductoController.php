@@ -61,7 +61,7 @@ class ProductoController extends Controller
         );
 
         if ($validar->fails()) {
-            return response()->json(['mensage', $validar->erros()]);
+            return response()->json(['mensage', $validar->errors()],500);
         }
 
         try {
@@ -76,7 +76,7 @@ class ProductoController extends Controller
                 'message' => 'Nuevo producto registrado',
                 'status' => 200,
                 'Producto' => $NuevoProducto
-            ]);
+            ],200);
         } catch (Exception $e) {
             return response()->json(['message' => 'Error', 'status' => 500, $e]);
         }
